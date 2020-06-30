@@ -1,55 +1,58 @@
 <!-- Header -->
 <header>
-  <div>
-    <img src="" alt="Origin Logo">
+  <div class="logo">
+    <img src="../assets/logoPrimary.svg" alt="Origin Logo" id="icon-header">
   </div>
 </header>
 
 
 <main>
   <!-- Main -->
-  <h1>Let's plan your <span>saving goal</span></h1>
-
+  <h1 class="title">Let's plan your <span class="title title--bold">saving goal.</span></h1>
   <!-- Goal card -->
-  <div>
-    <img src="" alt="">
-    <h2>Buy a house</h2>
-    <sub>Saving goal</sub>
-
-    <form>
-      <!-- Total Amount -->
-      <div>
-        <label for="input-total-amount">Total amount</label>
-        <div>
-          <div></div>
-          <input type="number" id="input-total-amount">
-          <div></div>
-        </div>
-      </div>
-
-      <!-- Reach goal by -->
-      <div>
-        <label for="input-goal-date">Reach goal by</label>
-        <div>
+  <div class="form-wrapper">
+    <div class="form">
+      <img src="../assets/ic_insurance.svg" alt="Grey house with coin">
+      <h2 class="form-title">Buy a house</h2>
+      <p class="form-subtitle">Saving goal</p>
+      <form>
+        <div class="form-inputs-wrapper">
+          <!-- Total Amount -->
           <div>
-            <img src="" alt="">
+            <label class="input-label" for="input-total-amount">Total amount</label>
+            <div class="input-custom">
+              <div class="input-fixed-content">
+                <p>$</p>
+              </div>
+              <input type="number" id="input-total-amount">
+            </div>
           </div>
-          <input type="text" id="input-goal-date">
-        </div>
 
-      </div>
-
-      <div>
-        <div>
-          <p>Monthly amount</p>
-          <p>$521</p>
+          <!-- Reach goal by -->
+          <div>
+            <label class="input-label" for="input-goal-date">Reach goal by</label>
+            <div class="input-custom">
+              <div class="arrow" id="input-decrease-btn">
+                <img src="../../assets/ic_arrow.svg" alt="Arrow Left">
+              </div>
+              <input type="date" id="input-goal-date" placeholder="Date">
+              <div class="arrow arrow--reverse" id="input-increase-btn">
+                <img src="../../assets/ic_arrow.svg" alt="Arrow Right">
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          You’re planning 48 monthly deposits to reach your $25,000 goal by October 2020.
+        <div class="form-footer">
+          <div class="form-footer__label">
+            <p>Monthly</p>
+            <p class="blue-text" id="form-footer-monthly-installment">$521</p>
+          </div>
+          <div class="form-footer__desc">
+            You’re planning <span class="bold-text" id="form-footer-n-installment">48</span> <span class="bold-text"> monthly deposits</span> to reach your <span class="bold-text" id="form-footer-total-amount">$25,000</span> goal by <span class="bold-text" id="form-footer-due-date">October 2020</span>.
+          </div>
         </div>
-      </div>
-      <button type="submit">Confirm</button>
-    </form>
+        <button class="btn" type="submit">Confirm</button>
+      </form>
+    </div>
   </div>
-
 </main>
