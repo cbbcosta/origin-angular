@@ -1,0 +1,40 @@
+body {
+  background-color: $grey-bg-1;
+  font-family: $main-typeface;
+}
+
+.title {
+  text-align: center;
+  letter-spacing: -0.2px;
+  font-weight: normal;
+  color: $dark-blue;
+  margin: 1.625em 0 1.5em;
+  @include font-size(18);
+  @include line-height(26);
+
+  &.title--bold {
+    font-weight: 600;
+  }
+}
+
+.bold-text {
+  font-weight: 600;
+}
+
+.blue-text {
+  color: $light-blue;
+  font-weight: 500;
+  @include font-size(26);
+  @include line-height(32);
+}
+
+@include media($break-m) {
+  .title {
+    @include font-size(24);
+    @include line-height(32);
+  }
+
+  .blue-text {
+    @include font-size(40);
+  }
+}

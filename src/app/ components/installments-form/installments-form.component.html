@@ -1,0 +1,56 @@
+<form>
+  <div class="form-inputs-wrapper">
+    <!-- Total Amount -->
+    <div class="form-input-item">
+      <label class="input-label" for="input-total-amount">Total amount</label>
+      <div class="input-custom" [ngClass]="{'error-input': amountInputValid === false }">
+        <div class="input-fixed-content">
+          <p>$</p>
+        </div>
+        <input required
+               [(ngModel)]="formattedAmount"
+               name="total-amount"
+               type="number"
+               id="input-total-amount"
+               (keyup)="setTotalAmount($event.target.value)"
+               placeholder="0,000.00"
+               pattern="^[0-9]+$"
+        >
+      </div>
+      <div class="error-message" *ngIf="amountInputValid === false">You must provide a total amount.</div>
+    </div>
+
+    <!-- Reach goal by -->
+    <div class="form-input-item">
+      <label class="input-label" for="input-goal-date">Reach goal by</label>
+      <div class="input-custom justify-left">
+        <div class="arrow" id="input-decrease-btn" (click)="decreaseMonth()">
+          <img src="../assets/ic_arrow.svg" alt="Arrow Left">
+        </div>
+        <input type="date"
+               required
+               readonly
+               id="input-goal-date"
+               value="{{year}}-{{monthIndex + 1}}-01"
+        >
+        <div class="input-custom__value">
+          <p>{{month}}</p>
+          <p class="input-custom__sub-title">{{year}}</p>
+        </div>
+        <div class="arrow arrow--reverse" id="input-increase-btn" (click)="increaseMonth()">
+          <img src="../assets/ic_arrow.svg" alt="Arrow Right">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-footer">
+    <div class="form-footer__label">
+      <p>Monthly</p>
+      <p class="blue-text" id="form-footer-monthly-installment">${{monthlyDeposit()}}</p>
+    </div>
+    <div class="form-footer__desc">
+      You’re planning <span class="bold-text" id="form-footer-n-installment">{{totalOfMonths}}</span> <span class="bold-text"> monthly deposits</span> to reach your <span class="bold-text" id="form-footer-total-amount">{{totalAmount}}</span> goal by <span class="bold-text" id="form-footer-due-date">{{month}} {{year}}</span>.
+    </div>
+  </div>
+  <button class="btn" type="submit">Confirm</button>
+</form>
