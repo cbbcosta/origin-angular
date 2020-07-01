@@ -26,6 +26,9 @@ body {
   font-weight: 500;
   @include font-size(26);
   @include line-height(32);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @include media($break-m) {

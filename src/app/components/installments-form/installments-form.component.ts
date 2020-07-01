@@ -10,17 +10,17 @@ export class InstallmentsFormComponent {
   totalOfMonths = 1;
   now = new Date();
   amountInputValid = true;
-  totalAmount: number;
-  formattedAmount: any;
+  totalAmount = 0;
   month: string;
   monthIndex: number;
   year: number;
+  goalFormDate: any;
 
   constructor() {
     this.setStartDate();
   }
 
-  @HostListener('keyup', ['$event'])
+  @HostListener('document:keyup', ['$event'])
   onKeyUp(event: KeyboardEvent): any {
     if (event.key === 'ArrowRight') {
       this.increaseMonth();
@@ -30,9 +30,14 @@ export class InstallmentsFormComponent {
   }
 
   setStartDate(): void {
-    this.monthIndex = this.now.getMonth();
-    this.month = months[this.monthIndex + 1];
+    this.monthIndex = this.now.getMonth() + 1;
+    this.month = months[this.monthIndex];
     this.year = this.now.getFullYear();
+    this.setGoalFormDate();
+  }
+
+  setGoalFormDate(): void {
+    this.goalFormDate = `${this.year}-0${this.monthIndex + 1}-01`;
   }
 
   setTotalAmount(value): void {
@@ -45,7 +50,6 @@ export class InstallmentsFormComponent {
   }
 
   decreaseMonth(): void {
-    const monthIndex = months.indexOf(this.month);
     const isCurrentYear = this.year === this.now.getFullYear();
     const isCurrentMonth = this.month === months[this.now.getMonth() + 1];
 
@@ -53,26 +57,30 @@ export class InstallmentsFormComponent {
       return;
     }
 
-    if (monthIndex === 0) {
-      this.month = months[months.length - 1];
+    if (this.monthIndex === 0) {
+      this.monthIndex = months.length - 1;
       this.year = this.year - 1;
     } else {
-      this.month = months[monthIndex - 1];
+      this.monthIndex -= 1;
+
     }
 
+    this.month = months[this.monthIndex];
+    this.setGoalFormDate();
     this.calculateTotalMonths();
   }
 
   increaseMonth(): void {
-    const monthIndex = months.indexOf(this.month);
-
-    if (monthIndex === months.length - 1) {
-      this.month = months[0];
+    if (this.monthIndex === months.length - 1) {
+      this.monthIndex = 0;
       this.year = this.year + 1;
     } else {
-      this.month = months[monthIndex + 1];
+      this.monthIndex += 1;
+
     }
 
+    this.month = months[this.monthIndex];
+    this.setGoalFormDate();
     this.calculateTotalMonths();
   }
 

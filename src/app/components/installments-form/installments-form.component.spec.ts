@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InstallmentsFormComponent } from './installments-form.component';
+import {months} from '../../month.array';
 
 describe('InstallmentsFormComponent', () => {
   let component: InstallmentsFormComponent;

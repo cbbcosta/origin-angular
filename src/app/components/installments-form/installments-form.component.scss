@@ -1,46 +1,27 @@
-@import '../../sass/main';
-
-.form {
-  background-color: $white;
-  box-shadow: 0px 1px 4px $grey-border;
-  border-radius: 8px;
-  padding: 1.5em 1.5em 2.25em;
-  text-align: left;
-  max-width: 464px;
-}
-
-.form-title {
-  font-weight: 600;
-  @include line-height(32);
-  @include font-size(24);
-  margin: 0;
-}
-
-.form-subtitle {
-  color: $grey-bg;
-  @include font-size(14);
-  margin: 0;
-  padding-bottom: 2.25em;
-}
-
-
-input[type="number"] {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
+@import '../../../assets/sass/settings/variables';
+@import '../../../assets/sass/settings/mixins';
 
 input {
   border: none;
   margin-right: 19px;
-  pointer-events: none;
 
   &:focus {
     border: none;
+  }
+
+  &[type=date] {
+    pointer-events: none;
+  }
+
+  &[type=number] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
   }
 }
 
@@ -78,8 +59,11 @@ input {
   width: 100%;
   height: 56px;
   display: flex;
-  justify-content: space-between;
   position: relative;
+
+  &:hover {
+    box-shadow: 2px 3px 11px 0 $grey-border;
+  }
 
   &:focus-within {
     box-shadow: 0 0 0 3px $dark-blue;
@@ -189,29 +173,6 @@ input[type="date"] {
 
 
 @include media($break-m) {
-  .logo {
-    padding: 30px 0 20px 37px;
-
-    img {
-      width: auto;
-    }
-  }
-
-  .form {
-    @include font-size(32);
-    margin-bottom: 64px
-  }
-
-  form {
-    text-align: center;
-  }
-
-  .form-wrapper {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-  }
-
   .form-inputs-wrapper {
     display: flex;
     text-align: left;
@@ -224,14 +185,8 @@ input[type="date"] {
     }
   }
 
-  .form-title {
-    @include font-size(32);
-    @include line-height(40);
-  }
-
-  .form-subtitle {
-    @include font-size(16);
-    margin-top: 2px;
+  form {
+    text-align: center;
   }
 
   .form-footer__label {
