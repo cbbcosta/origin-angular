@@ -2,6 +2,25 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InstallmentsFormComponent } from './installments-form.component';
 import { months } from '../../helpers/month.array';
+import { KEYBOARD_KEYS } from '../../helpers/keycodes.enum';
+
+
+export const arrowClickEvent = (fixture, arrowId) => {
+  fixture.nativeElement.querySelector(arrowId).click();
+  fixture.detectChanges();
+};
+
+export const keyboardPressEvent = (fixture, eventKey) => {
+  const keyEvent = new KeyboardEvent('keyup', { key: eventKey });
+  document.dispatchEvent(keyEvent);
+  fixture.detectChanges();
+};
+
+export const setMockDate = (monthId) => {
+  const currentYear = new Date().getFullYear();
+  jasmine.clock().mockDate(new Date(currentYear, monthId, 0o1));
+  jasmine.clock().install();
+};
 
 
 describe('InstallmentsFormComponent', () => {
@@ -25,71 +44,249 @@ describe('InstallmentsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set start date field with next month and current year', () => {
-    const currentDate = new Date();
-    const currentMonthIndex = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear().toString();
-
-    const inputMonth = fixture.nativeElement.querySelector('#month').textContent;
-    const inputYear = fixture.nativeElement.querySelector('#year').textContent;
-
-    expect(inputMonth).toBe(months[currentMonthIndex + 1]);
-    expect(inputYear).toBe(currentYear);
-  });
-
-  it('should go to next month when right arrow is clicked', () => {
-    const rightArrow = fixture.nativeElement.querySelector('#input-increase-btn');
-    const index = component.monthIndex;
-
-    rightArrow.click();
-    fixture.detectChanges();
-
-    expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[index + 1]);
-  });
-
-  it('should not navigate to past dates when left arrow is clicked', () => {
-    const leftArrow = fixture.nativeElement.querySelector('#input-decrease-btn');
-    const index = component.monthIndex;
-
-    leftArrow.click();
-    fixture.detectChanges();
-
-    expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[index]);
-  });
-
-  it('should navigate to previous month when left arrow is clicked', () => {
-    const leftArrow = fixture.nativeElement.querySelector('#input-decrease-btn');
-    const rightArrow = fixture.nativeElement.querySelector('#input-increase-btn');
-    const index = component.monthIndex;
-
-    // navigate to next month
-    rightArrow.click();
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[index + 1]);
-
-    // navigate to previous month
-    leftArrow.click();
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[index]);
-  });
-
-  describe('when in december', () => {
+  describe('when current date is last month', () => {
     beforeEach(() => {
-      jasmine.clock().mockDate(new Date(2020, 11, 0o1));
-      jasmine.clock().install();
+      setMockDate(11);
       fixture = TestBed.createComponent(InstallmentsFormComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
-    it('input should start in january of the next year', () => {
-      console.log(component.month);
-
+    it('#input-date #month should start at first month', () => {
       expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[0]);
-      expect(fixture.nativeElement.querySelector('#year').textContent).toBe('2021');
+    });
+
+    it('#input-date #year should start at current year + 1', () => {
+      const nextYear = new Date().getFullYear() + 1;
+
+      expect(fixture.nativeElement.querySelector('#year').textContent).toBe(nextYear.toString());
     });
   });
 
+  describe('when current date is not last month', () => {
+    beforeEach(() => {
+      setMockDate(10);
+      fixture = TestBed.createComponent(InstallmentsFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('#input-date #month should start at current month + 1;', () => {
+      const month = new Date().getMonth();
+
+      expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month + 1]);
+    });
+
+    it('#input-date #year should start at current year', () => {
+      const year = new Date().getFullYear().toString();
+
+      expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year);
+    });
+  });
+
+  describe('when input-date value is in the last month at any current date', () => {
+    beforeEach(() => {
+      setMockDate(9);
+      fixture = TestBed.createComponent(InstallmentsFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+      arrowClickEvent(fixture, '#input-increase-btn');
+    });
+
+    describe('and #input-increase-btn is clicked', () => {
+      it('should navigate to first month', () => {
+        arrowClickEvent(fixture, '#input-increase-btn');
+
+        expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[0]);
+      });
+
+      it('should navigate to year + 1', () => {
+        const nextYear = new Date().getFullYear() + 1;
+
+        arrowClickEvent(fixture, '#input-increase-btn');
+
+        expect(fixture.nativeElement.querySelector('#year').textContent).toBe(nextYear.toString());
+      });
+    });
+
+    describe('and right arrow is pressed on the keyboard', () => {
+      it('should navigate to first month', () => {
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.RIGHT_ARROW);
+
+        expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[0]);
+      });
+
+      it('should navigate to year + 1', () => {
+        const nextYear = new Date().getFullYear() + 1;
+
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.RIGHT_ARROW);
+
+        expect(fixture.nativeElement.querySelector('#year').textContent).toBe(nextYear.toString());
+      });
+    });
+  });
+
+  describe('when input-date value is not in the last month at any current date', () => {
+    beforeEach(() => {
+      setMockDate(5);
+      fixture = TestBed.createComponent(InstallmentsFormComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    describe('and #input-increase-btn is clicked', () => {
+      it('should navigate to month + 1', () => {
+        const month = component.monthIndex;
+
+        arrowClickEvent(fixture, '#input-increase-btn');
+
+        expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month + 1]);
+      });
+
+      it('should navigate to year + 1', () => {
+        const year = new Date().getFullYear();
+
+        arrowClickEvent(fixture, '#input-increase-btn');
+
+        expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year.toString());
+      });
+    });
+
+    describe('and right arrow is pressed on the keyboard', () => {
+      it('should navigate to month + 1', () => {
+        const month = component.monthIndex;
+
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.RIGHT_ARROW);
+
+        expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month + 1]);
+      });
+
+      it('should navigate to year + 1', () => {
+        const year = new Date().getFullYear();
+
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.RIGHT_ARROW);
+
+        expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year.toString());
+      });
+    });
+  });
+
+  describe('when input-date value is at start date', () => {
+    describe('and #input-decrease-btn is clicked', () => {
+      it('should not navigate', () => {
+        const month = component.monthIndex;
+        const year = component.year.toString();
+
+        arrowClickEvent(fixture, '#input-decrease-btn');
+
+        expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month]);
+        expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year);
+      });
+    });
+
+    describe('and left arrow is pressed on the keyboard', () => {
+      it('should not navigate', () => {
+        const month = component.monthIndex;
+        const year = component.year.toString();
+
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.LEFT_ARROW);
+
+        expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month]);
+        expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year);
+      });
+    });
+  });
+
+  describe('when input-date value is at start month + n', () => {
+    describe('and date is not first month', () => {
+      beforeEach(() => {
+        setMockDate(1);
+        fixture = TestBed.createComponent(InstallmentsFormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.RIGHT_ARROW);
+      });
+
+      describe('and #input-decrease-btn is clicked', () => {
+        it('should navigate to month - 1', () => {
+          const month = component.monthIndex;
+
+          arrowClickEvent(fixture, '#input-decrease-btn');
+
+          expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month - 1]);
+        });
+
+        it('should stay at same year', () => {
+          const year = component.year.toString();
+
+          arrowClickEvent(fixture, '#input-decrease-btn');
+
+          expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year);
+        });
+      });
+
+      describe('and left arrow is pressed on the keyboard ', () => {
+        it('should navigate to month - 1', () => {
+          const month = component.monthIndex;
+
+          keyboardPressEvent(fixture, KEYBOARD_KEYS.LEFT_ARROW);
+
+          expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[month - 1]);
+        });
+
+        it('should stay at same year', () => {
+          const year = component.year.toString();
+
+          keyboardPressEvent(fixture, KEYBOARD_KEYS.LEFT_ARROW);
+
+          expect(fixture.nativeElement.querySelector('#year').textContent).toBe(year);
+        });
+      });
+    });
+
+    describe('and date is first month', () => {
+      beforeEach(() => {
+        setMockDate(10);
+        fixture = TestBed.createComponent(InstallmentsFormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+
+        keyboardPressEvent(fixture, KEYBOARD_KEYS.RIGHT_ARROW);
+      });
+
+      describe('and #input-decrease-btn is clicked', () => {
+        it('should navigate to last month', () => {
+          arrowClickEvent(fixture, '#input-decrease-btn');
+          expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[months.length - 1]);
+        });
+
+        it('should navigate to year - 1', () => {
+          const lastYear = component.year - 1;
+
+          arrowClickEvent(fixture, '#input-decrease-btn');
+
+          expect(fixture.nativeElement.querySelector('#year').textContent).toBe(lastYear.toString());
+        });
+      });
+
+      describe('and left arrow is pressed on the keyboard', () => {
+        it('should navigate to last month', () => {
+          keyboardPressEvent(fixture, KEYBOARD_KEYS.LEFT_ARROW);
+
+          expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[months.length - 1]);
+        });
+
+        it('should snavigate to year - 1', () => {
+          const lastYear = component.year - 1;
+
+          keyboardPressEvent(fixture, KEYBOARD_KEYS.LEFT_ARROW);
+
+          expect(fixture.nativeElement.querySelector('#year').textContent).toBe(lastYear.toString());
+        });
+      });
+    });
+  });
 
   afterEach(() => {
     jasmine.clock().uninstall();

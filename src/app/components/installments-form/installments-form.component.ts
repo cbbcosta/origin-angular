@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { months } from '../../helpers/month.array';
-import {InputMaskService} from '../../services/input-mask.service';
+import { InputMaskService } from '../../services/input-mask.service';
+import { KEYBOARD_KEYS } from '../../helpers/keycodes.enum';
 
 @Component({
   selector: 'app-installments-form',
@@ -25,15 +26,15 @@ export class InstallmentsFormComponent {
 
   @HostListener('document:keyup', ['$event'])
   onKeyUp(event: KeyboardEvent): any {
-    if (event.key === 'ArrowRight') {
+    if (event.key === KEYBOARD_KEYS.RIGHT_ARROW) {
       this.increaseMonth();
-    } else if (event.key === 'ArrowLeft') {
+    } else if (event.key === KEYBOARD_KEYS.LEFT_ARROW) {
       this.decreaseMonth();
     }
   }
 
   setStartDate(): void {
-    if (this.monthIndex === months.length - 1) {
+    if (this.now.getMonth() === months.length - 1) {
       this.monthIndex = 0;
       this.year = this.now.getFullYear() + 1;
     } else {
@@ -54,7 +55,6 @@ export class InstallmentsFormComponent {
   }
 
   monthlyDeposit(): string | number {
-    console.log(this.totalNumber);
     const monthlyValue = this.totalNumber / this.totalOfMonths || 0;
     return monthlyValue.toFixed(2);
   }
