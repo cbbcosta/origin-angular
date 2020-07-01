@@ -88,30 +88,6 @@ describe('InstallmentsFormComponent', () => {
       expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[0]);
       expect(fixture.nativeElement.querySelector('#year').textContent).toBe('2021');
     });
-
-    // it('should click on left arrow and move to december from previous year', () => {
-    //   const leftArrow = fixture.nativeElement.querySelector('#input-decrease-btn');
-    //   const rightArrow = fixture.nativeElement.querySelector('#input-increase-btn');
-    //   const index = component.monthIndex;
-    //   const currentYear = new Date().getFullYear();
-    //
-    //   // navigate to next month
-    //   rightArrow.click();
-    //   fixture.detectChanges();
-    //   console.log(component.now, component.month, component.year);
-    //
-    //   // navigate to next month
-    //   rightArrow.click();
-    //   fixture.detectChanges();
-    //
-    //
-    //   // navigate to previous month
-    //   leftArrow.click();
-    //   fixture.detectChanges();
-    //
-    //   expect(fixture.nativeElement.querySelector('#month').textContent).toBe(months[index]);
-    //   expect(fixture.nativeElement.querySelector('#year').textContent).toBe(currentYear - 1);
-    // });
   });
 
 
