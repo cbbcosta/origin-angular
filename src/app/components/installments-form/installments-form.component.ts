@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { months } from '../../helpers/month.array';
+import {InputMaskService} from '../../services/input-mask.service';
 
 @Component({
   selector: 'app-installments-form',
@@ -10,13 +11,15 @@ export class InstallmentsFormComponent {
   totalOfMonths = 1;
   now = new Date();
   amountInputValid = true;
-  totalAmount = 0;
+  totalAmount: string | number;
   month: string;
   monthIndex: number;
   year: number;
   goalFormDate: any;
+  inputType = 'number';
+  totalNumber: number;
 
-  constructor() {
+  constructor(private maskInput: InputMaskService) {
     this.setStartDate();
   }
 
@@ -30,9 +33,15 @@ export class InstallmentsFormComponent {
   }
 
   setStartDate(): void {
-    this.monthIndex = this.now.getMonth() + 1;
+    if (this.monthIndex === months.length - 1) {
+      this.monthIndex = 0;
+      this.year = this.now.getFullYear() + 1;
+    } else {
+      this.monthIndex = this.now.getMonth() + 1;
+      this.year = this.now.getFullYear();
+    }
+
     this.month = months[this.monthIndex];
-    this.year = this.now.getFullYear();
     this.setGoalFormDate();
   }
 
@@ -45,7 +54,8 @@ export class InstallmentsFormComponent {
   }
 
   monthlyDeposit(): string | number {
-    const monthlyValue = this.totalAmount / this.totalOfMonths || 0;
+    console.log(this.totalNumber);
+    const monthlyValue = this.totalNumber / this.totalOfMonths || 0;
     return monthlyValue.toFixed(2);
   }
 
@@ -80,5 +90,16 @@ export class InstallmentsFormComponent {
     this.month = months[this.monthIndex];
     this.setGoalFormDate();
     this.totalOfMonths++;
+  }
+
+  maskInputValue(value): void {
+    this.totalNumber = value;
+    this.inputType = 'text';
+    this.totalAmount = this.maskInput.maskCurrency(value);
+  }
+
+  storeNumber(value): void {
+    this.totalAmount = value;
+    this.inputType = 'number';
   }
 }

@@ -9,13 +9,16 @@
         </div>
         <input
           [(ngModel)]="totalAmount"
-          type="number"
+          type="{{inputType}}"
+          step="0.01"
           name="total-amount"
           id="input-total-amount"
           required
           (keyup)="setTotalAmount($event.target.value)"
+          (blur)="maskInputValue($event.target.value)"
+          (focus)="storeNumber($event.target.value)"
           placeholder="0,000.00"
-          pattern="\d*"
+          pattern="/^\d*\.?\d*$/"
         >
       </div>
       <div class="error-message" *ngIf="amountInputValid === false">You must provide a total amount.</div>
