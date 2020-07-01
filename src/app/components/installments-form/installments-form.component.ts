@@ -1,5 +1,5 @@
-import {Component, HostListener} from '@angular/core';
-import {months} from '../../month.array';
+import { Component, HostListener } from '@angular/core';
+import { months } from '../../helpers/month.array';
 
 @Component({
   selector: 'app-installments-form',
@@ -37,7 +37,7 @@ export class InstallmentsFormComponent {
   }
 
   setGoalFormDate(): void {
-    this.goalFormDate = `${this.year}-0${this.monthIndex + 1}-01`;
+    this.goalFormDate = `${this.year}-${this.monthIndex + 1}-01`;
   }
 
   setTotalAmount(value): void {
@@ -62,12 +62,11 @@ export class InstallmentsFormComponent {
       this.year = this.year - 1;
     } else {
       this.monthIndex -= 1;
-
     }
 
     this.month = months[this.monthIndex];
     this.setGoalFormDate();
-    this.calculateTotalMonths();
+    this.totalOfMonths--;
   }
 
   increaseMonth(): void {
@@ -76,21 +75,10 @@ export class InstallmentsFormComponent {
       this.year = this.year + 1;
     } else {
       this.monthIndex += 1;
-
     }
 
     this.month = months[this.monthIndex];
     this.setGoalFormDate();
-    this.calculateTotalMonths();
-  }
-
-  calculateTotalMonths(): void {
-    const monthIndex = months.indexOf(this.month) + 1;
-    const monthsInYears = (this.year - this.now.getFullYear()) * 12;
-    if (monthsInYears === 0) {
-      this.totalOfMonths = monthIndex - this.now.getMonth();
-    } else {
-      this.totalOfMonths =  monthsInYears - this.now.getMonth() + monthIndex;
-    }
+    this.totalOfMonths++;
   }
 }
