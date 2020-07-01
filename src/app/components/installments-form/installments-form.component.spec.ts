@@ -44,6 +44,16 @@ describe('InstallmentsFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should display monthly deposit bigger than 0 when there is a total amount', () => {
+    component.totalNumber = 12000;
+    component.totalOfMonths = 12;
+
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('#form-footer-monthly-installment').textContent).toBe('$1,000.00');
+    expect(fixture.nativeElement.querySelector('#form-footer-monthly-installment').textContent).not.toBe('$');
+  });
+
   describe('when current date is last month', () => {
     beforeEach(() => {
       setMockDate(11);

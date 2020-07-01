@@ -4,9 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class InputMaskService {
-
-  constructor() { }
-
   public maskCurrency(currentNumber): string {
     const formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',

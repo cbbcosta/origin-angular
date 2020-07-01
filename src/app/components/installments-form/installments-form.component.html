@@ -50,11 +50,11 @@
   </div>
   <div class="form-footer">
     <div class="form-footer__label">
-      <p>Monthly</p>
+      <p>Monthly<span class="m-display-none"> amount</span></p>
       <p class="blue-text" id="form-footer-monthly-installment">${{monthlyDeposit()}}</p>
     </div>
     <div class="form-footer__desc">
-      You’re planning <span class="bold-text" id="form-footer-n-installment">{{totalOfMonths}}</span> <span class="bold-text"> monthly deposits</span> to reach your <span class="bold-text" id="form-footer-total-amount">${{totalAmount}}</span> goal by <span class="bold-text" id="form-footer-due-date">{{month}} {{year}}</span>.
+      You’re planning <span class="bold-text" id="form-footer-n-installment">{{totalOfMonths}}</span> <span class="bold-text"> monthly deposits</span> to reach your <span class="bold-text" id="form-footer-total-amount">${{displayTotalAmount()}}</span> goal by <span class="bold-text" id="form-footer-due-date">{{month}} {{year}}</span>.
     </div>
   </div>
   <button class="btn" type="submit">Confirm</button>
