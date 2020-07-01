@@ -56,7 +56,7 @@ export class InstallmentsFormComponent {
 
   monthlyDeposit(): string | number {
     const monthlyValue = this.totalNumber / this.totalOfMonths || 0;
-    return monthlyValue.toFixed(2);
+    return this.maskInput.maskCurrency(monthlyValue.toFixed(2));
   }
 
   decreaseMonth(): void {
@@ -101,5 +101,9 @@ export class InstallmentsFormComponent {
   storeNumber(value): void {
     this.totalAmount = value;
     this.inputType = 'number';
+  }
+
+  displayTotalAmount(): number | string {
+    return this.totalAmount;
   }
 }

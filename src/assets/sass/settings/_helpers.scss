@@ -5,3 +5,10 @@
 .justify-content-between {
   justify-content: space-between;
 }
+
+.m-display-none {
+  display: none;
+  @include media($break-m) {
+    display: inline;
+  }
+}
