@@ -1,0 +1,18 @@
+.error-message {
+  color: $error-red;
+  @include font-size(12);
+  line-height: 1.33;
+  letter-spacing: normal;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.error-input {
+  &.input-custom {
+    box-shadow: 0 0 0 2px $error-red;
+
+    &:focus-within {
+      box-shadow: 0 0 0 2px $error-red;
+    }
+  }
+}

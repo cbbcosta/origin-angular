@@ -1,0 +1,200 @@
+@import '../../../assets/sass/settings/variables';
+@import '../../../assets/sass/settings/mixins';
+
+input {
+  border: none;
+  margin-right: 19px;
+
+  &:focus {
+    border: none;
+  }
+
+  &[type=date] {
+    pointer-events: none;
+  }
+
+  &[type=number] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  &[type=number]::-webkit-inner-spin-button,
+  &[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+}
+
+.input-fixed-content {
+  height: 56px;
+  width: 56px;
+  display: flex;
+  background: $grey-bg-1;
+  border: 1px solid $grey-border;
+  box-sizing: border-box;
+  border-radius: 4px 0px 0px 4px;
+  transform: translateY(-1px);
+
+  p {
+    margin: 0;
+    padding: 0;
+    align-self: center;
+    width: 100%;
+    text-align: center;
+    @include font-size(22);
+    @include line-height(26);
+    letter-spacing: -0.183333px;
+    color: $grey-bg;
+    font-weight: normal;
+  }
+}
+
+.input-custom {
+  background: $white;
+  border: 1px solid $grey-bg-1;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  margin-top: 5px;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  position: relative;
+
+  &:hover {
+    box-shadow: 2px 3px 11px 0 $grey-border;
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 0 3px $dark-blue;
+    border-radius: 4px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input {
+    margin: 0;
+    padding: 0 16px;
+    font-weight: 600;
+    @include font-size(20);
+    @include line-height(24);
+    letter-spacing: -0.166667px;
+    overflow: hidden;
+  }
+}
+
+input[type="date"] {
+  opacity: 0;
+}
+
+.input-custom__value {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  @include font-size(20);
+  @include line-height(24);
+  letter-spacing: -0.166667px;
+  overflow: hidden;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  text-align: center;
+
+  .input-custom__sub-title {
+    margin: 0;
+    font-weight: normal;
+    @include font-size(16);
+    @include line-height(20);
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.input-label {
+  @include font-size(16);
+  @include line-height(20);
+  font-weight: 500;
+  padding-bottom: 4px;
+  margin: 0;
+}
+
+.arrow {
+  height: 56px;
+  width: 48px;
+  background: $grey-border;
+  border-radius: 4px 0px 0px 4px;
+  display: flex;
+  justify-content: center;
+  transform: translateY(-1px);
+
+  &.arrow--reverse {
+    border-radius: 0 4px 4px 0;
+    transform: translateX(1px);
+
+    img {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.form-footer {
+  border: 1px solid $grey-border;
+  box-shadow: 0px 1px 4px rgba(150, 164, 176, 0.1);
+  border-radius: 4px;
+  margin-bottom: 36px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.form-footer__label {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.25em 1.5em;
+  align-items: center;
+  @include font-size(16);
+}
+
+.form-footer__desc {
+  padding: 20px 24px;
+  background-color: $grey-bg-1;
+  @include font-size(12);
+  @include line-height(16);
+  text-align: left;
+  min-height: 32px;
+}
+
+
+@include media($break-m) {
+  .form-inputs-wrapper {
+    display: flex;
+    text-align: left;
+    justify-content: space-between;
+  }
+
+  .input-custom {
+    input {
+      max-width: 50%;
+    }
+  }
+
+  form {
+    text-align: center;
+  }
+
+  .form-footer__label {
+    @include font-size(18);
+    padding: 36px 30px;
+  }
+
+  .form-input-item {
+    max-width: 48%;
+  }
+}

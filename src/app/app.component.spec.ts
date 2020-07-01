@@ -13,19 +13,36 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
+
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'origin-angular'`, () => {
+  it('should contain logo', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('origin-angular');
+    const logo = fixture.nativeElement.querySelector('#icon-header').src;
+
+    expect(logo).not.toBeNull();
   });
 
-  it('should render title', () => {
+  it('should contain alternative text for header logo', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('origin-angular app is running!');
+    const altText = fixture.nativeElement.querySelector('#icon-header').alt;
+
+    expect(altText).toBe('Origin Logo');
+  });
+
+  it('should contain an h1 tag', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const h1Title = fixture.nativeElement.querySelector('h1');
+
+    expect(h1Title).not.toBeUndefined();
+  });
+
+  it('should contain only one h1 tag', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const h1Title = fixture.nativeElement.querySelectorAll('h1');
+
+    expect(h1Title.length).toBe(1);
   });
 });
