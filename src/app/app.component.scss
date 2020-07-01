@@ -1,5 +1,5 @@
-@import 'sass/settings/variables';
-@import 'sass/settings/mixins';
+@import 'src/assets/sass/settings/variables';
+@import 'src/assets/sass/settings/mixins';
 
 :root {
   background-color: $grey-bg;
@@ -22,4 +22,62 @@ header {
 
 main {
   text-align: center;
+}
+
+.white-card {
+  background-color: $white;
+  box-shadow: 0px 1px 4px $grey-border;
+  border-radius: 8px;
+  padding: 1.5em 1.5em 2.25em;
+  text-align: left;
+  max-width: 464px;
+  margin: 0 auto;
+}
+
+.form-title {
+  font-weight: 600;
+  @include line-height(32);
+  @include font-size(24);
+  margin: 0;
+}
+
+.form-subtitle {
+  color: $grey-bg;
+  @include font-size(14);
+  margin: 0;
+  padding-bottom: 2.25em;
+}
+
+@include media($break-m) {
+  .logo {
+    padding: 30px 0 20px 37px;
+
+    img {
+      width: 95px;
+    }
+  }
+  .white-card {
+    @include font-size(32);
+    margin-bottom: 64px;
+
+    img {
+      width: 40px;
+    }
+  }
+
+  .white-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .form-title {
+    @include font-size(32);
+    @include line-height(40);
+  }
+
+  .form-subtitle {
+    @include font-size(16);
+    margin-top: 2px;
+  }
 }
