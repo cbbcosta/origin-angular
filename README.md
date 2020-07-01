@@ -1,5 +1,5 @@
 # OriginAngular
-This is a piece of the savings feature of the finacial solution from origin.
+This is a piece of the savings feature of the financial solution from origin.
 
 ## Local development
 Run `npm install` to install project dependencies.
