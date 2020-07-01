@@ -1,9 +1,24 @@
 # OriginAngular
+This is a piece of the savings feature of the finacial solution from origin.
 
 ## Local development
+Run `npm install` to install project dependencies.
+Run `ng serve` for a dev server. 
+The project will be available on `localhost:4200`. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+> Obs.: To access the platform from a mobile device run `ng serve --host 0.0.0.0`, as long as you are in the same network, just go to the browser and access `<your-ip-address>:4200`.
 
-## Running unit tests
+## Linting
+Run `ng lint`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Unit tests
+
+Run `ng test` .
+
+## Desktop 
+
+![destktop application](desktop.png)
+
+## Mobile
+
+![mobile application](mobile.png)
