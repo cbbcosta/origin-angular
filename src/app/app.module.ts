@@ -5,15 +5,13 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { InstallmentsFormComponent } from './components/installments-form/installments-form.component';
-import {FormsModule} from '@angular/forms';
-import {InputMaskService} from './services/input-mask.service';
-import { SubmitButtonComponent } from './components/submit-button/submit-button.component';
+import { FormsModule } from '@angular/forms';
+import { InputMaskService } from './services/input-mask.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     InstallmentsFormComponent,
-    SubmitButtonComponent
   ],
   imports: [
     BrowserModule,
