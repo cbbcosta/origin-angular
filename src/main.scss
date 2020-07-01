@@ -1,11 +1,11 @@
-@import 'settings/variables';
-@import 'settings/mixins';
-@import 'settings/normalize';
-@import 'settings/base';
-@import 'settings/helpers';
+@import 'assets/sass/settings/variables';
+@import 'assets/sass/settings/mixins';
+@import 'assets/sass/settings/normalize';
+@import 'assets/sass/settings/base';
+@import 'assets/sass/settings/helpers';
 
-@import 'components/form';
-@import 'components/button';
-@import 'components/error';
+@import 'assets/sass/components/form';
+@import 'assets/sass/components/button';
+@import 'assets/sass/components/error';
 
 
